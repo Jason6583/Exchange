@@ -10,10 +10,10 @@ namespace Logic
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IReadOnlyContext _readonlyContext;
-        public CurrencyService(IUnitOfWork unitOfWork, IReadOnlyContext readonlyContext)
+        public CurrencyService(IUnitOfWork unitOfWork, IReadOnlyContext readOnlyContext)
         {
             _unitOfWork = unitOfWork;
-            _readonlyContext = readonlyContext;
+            _readonlyContext = readOnlyContext;
         }
 
         public List<Currency> GetCurrencies()

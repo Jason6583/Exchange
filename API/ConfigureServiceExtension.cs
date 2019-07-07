@@ -15,7 +15,7 @@ namespace API
         public static void AddBusinessServices(this IServiceCollection services)
         {
             services.AddSingleton<IGlobalQueryFilterRegisterer, GlobalQueryFilterRegisterer>();
-            services.AddScoped<ExchangeContext>(x => new ExchangeContext(new GlobalQueryFilterRegisterer(), "Host=localhost;Database=Exchange;Username=postgres;Password=root"));
+            services.AddScoped<DbContext>(x => new ExchangeContext(new GlobalQueryFilterRegisterer(), "Host=localhost;Database=Exchange;Username=postgres;Password=root"));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IReadOnlyContext, ReadOnlyContext>();
             services.AddScoped<IMarketService, MarketService>();

@@ -27,7 +27,6 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddDbContext<ExchangeContext>();
             services.AddBusinessServices();
         }
 
@@ -51,28 +50,6 @@ namespace API
 
 
             app.UseHttpsRedirection();
-            app.UseWebSockets(webSocketOptions);
-            app.Use(async (context, next) =>
-            {
-                if (context.Request.Path == "/ws")
-                {
-                    if (context.WebSockets.IsWebSocketRequest)
-                    {
-                        WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                        ArraySegment<byte> asg = new ArraySegment<byte>();
-                        var result = await webSocket.ReceiveAsync(asg, new System.Threading.CancellationToken());
-                    }
-                    else
-                    {
-                        context.Response.StatusCode = 400;
-                    }
-                }
-                else
-                {
-                    await next();
-                }
-
-            });
             app.UseMvc();
         }
     }

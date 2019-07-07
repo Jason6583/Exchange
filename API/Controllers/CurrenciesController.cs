@@ -15,11 +15,9 @@ namespace API
     public class CurrenciesController : Controller
     {
         private readonly ICurrencyService _currencyService;
-        public CurrenciesController(ExchangeContext dbcontext)//ICurrencyService currencyService)
+        public CurrenciesController(ICurrencyService currencyService)
         {
-            //_currencyService = currencyService;
-            //var dbcontext = new ExchangeContext("Host=localhost;Database=Exchange;Username=postgres;Password=root", new GlobalQueryFilterRegisterer());
-            _currencyService = new CurrencyService(new UnitOfWork(dbcontext), new ReadOnlyContext(dbcontext));
+            _currencyService = currencyService;
         }
 
         [HttpGet]
