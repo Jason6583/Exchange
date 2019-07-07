@@ -13,11 +13,14 @@ namespace Entity
         public virtual DbSet<Log> Log { get; set; }
         public virtual DbSet<Market> Market { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
+        public virtual DbSet<OrdersTransaction> OrdersTransaction { get; set; }
         public virtual DbSet<ReceivingAddress> ReceivingAddress { get; set; }
         public virtual DbSet<SendReceiveTransaction> SendReceiveTransaction { get; set; }
         public virtual DbSet<SendingAddress> SendingAddress { get; set; }
         public virtual DbSet<Trade> Trade { get; set; }
+        public virtual DbSet<TradeFeeHistory> TradeFeeHistory { get; set; }
         public virtual DbSet<TradeHistory> TradeHistory { get; set; }
+        public virtual DbSet<TradeTransaction> TradeTransaction { get; set; }
         public virtual DbSet<Transaction> Transaction { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
@@ -251,9 +254,19 @@ namespace Entity
 
                 entity.Property(e => e.NewOrderAllowed).HasColumnName("new_order_allowed");
 
+                entity.Property(e => e.QuantityStepSize).HasColumnName("quantity_step_size");
+
                 entity.Property(e => e.QuoteCurrencyId).HasColumnName("quote_currency_id");
 
+                entity.Property(e => e.RateStepSize)
+                    .HasColumnName("rate_step_size")
+                    .HasColumnType("numeric(18,8)");
+
                 entity.Property(e => e.TradeCurrencyId).HasColumnName("trade_currency_id");
+
+                entity.Property(e => e.TradeFeeId).HasColumnName("trade_fee_id");
+
+                entity.Property(e => e.TradeMaxQuantity).HasColumnName("trade_max_quantity");
 
                 entity.Property(e => e.TradeMinQuantity).HasColumnName("trade_min_quantity");
 
@@ -276,6 +289,12 @@ namespace Entity
                     .HasForeignKey(d => d.TradeCurrencyId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("market_trade_currency_fkey");
+
+                entity.HasOne(d => d.TradeFee)
+                    .WithMany(p => p.Market)
+                    .HasForeignKey(d => d.TradeFeeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("market_trade_fee_id_fkey");
             });
 
             modelBuilder.Entity<Orders>(entity =>
@@ -286,11 +305,19 @@ namespace Entity
                     .HasColumnName("id")
                     .HasDefaultValueSql("nextval('order_id_seq'::regclass)");
 
+                entity.Property(e => e.Cost).HasColumnName("cost");
+
                 entity.Property(e => e.CreatedOn)
                     .HasColumnName("created_on")
                     .HasColumnType("timestamp with time zone");
 
+                entity.Property(e => e.Fee).HasColumnName("fee");
+
+                entity.Property(e => e.FeeCurrencyId).HasColumnName("fee_currency_id");
+
                 entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
+
+                entity.Property(e => e.LockedBalance).HasColumnName("locked_balance");
 
                 entity.Property(e => e.MarketId).HasColumnName("market_id");
 
@@ -304,6 +331,8 @@ namespace Entity
 
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
 
+                entity.Property(e => e.QuantityExecuted).HasColumnName("quantity_executed");
+
                 entity.Property(e => e.QuantityRemaining).HasColumnName("quantity_remaining");
 
                 entity.Property(e => e.Rate)
@@ -316,13 +345,46 @@ namespace Entity
                     .HasColumnName("stop_rate")
                     .HasColumnType("numeric(18,8)");
 
+                entity.Property(e => e.TradeFeeId).HasColumnName("trade_fee_id");
+
                 entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.HasOne(d => d.TradeFee)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.TradeFeeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("orders_trade_fee_id_fkey");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("order_user_id_fkey");
+            });
+
+            modelBuilder.Entity<OrdersTransaction>(entity =>
+            {
+                entity.ToTable("orders_transaction");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
+
+                entity.Property(e => e.OrderId).HasColumnName("order_id");
+
+                entity.Property(e => e.TransactionId).HasColumnName("transaction_id");
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.OrdersTransaction)
+                    .HasForeignKey(d => d.OrderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("orders_transaction_order_id_fkey");
+
+                entity.HasOne(d => d.Transaction)
+                    .WithMany(p => p.OrdersTransaction)
+                    .HasForeignKey(d => d.TransactionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("orders_transaction_transaction_id_fkey");
             });
 
             modelBuilder.Entity<ReceivingAddress>(entity =>
@@ -352,6 +414,8 @@ namespace Entity
                 entity.Property(e => e.ModifiedOn)
                     .HasColumnName("modified_on")
                     .HasColumnType("timestamp with time zone");
+
+                entity.Property(e => e.PartitionId).HasColumnName("partition_id");
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
@@ -466,8 +530,6 @@ namespace Entity
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Amount).HasColumnName("amount");
-
                 entity.Property(e => e.CreatedOn)
                     .HasColumnName("created_on")
                     .HasColumnType("timestamp with time zone");
@@ -486,6 +548,8 @@ namespace Entity
 
                 entity.Property(e => e.OrderId).HasColumnName("order_id");
 
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
                 entity.Property(e => e.Rate)
                     .HasColumnName("rate")
                     .HasColumnType("numeric(18,8)");
@@ -501,6 +565,36 @@ namespace Entity
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("trade_order_id_fkey");
+            });
+
+            modelBuilder.Entity<TradeFeeHistory>(entity =>
+            {
+                entity.ToTable("trade_fee_history");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.CreatedOn)
+                    .HasColumnName("created_on")
+                    .HasColumnType("timestamp with time zone");
+
+                entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
+
+                entity.Property(e => e.Label)
+                    .IsRequired()
+                    .HasColumnName("label")
+                    .HasMaxLength(250);
+
+                entity.Property(e => e.MakerFeePercent)
+                    .HasColumnName("maker_fee_percent")
+                    .HasColumnType("numeric(6,4)");
+
+                entity.Property(e => e.ModifiedOn)
+                    .HasColumnName("modified_on")
+                    .HasColumnType("timestamp with time zone");
+
+                entity.Property(e => e.TakerFeePercent)
+                    .HasColumnName("taker_fee_percent")
+                    .HasColumnType("numeric(6,4)");
             });
 
             modelBuilder.Entity<TradeHistory>(entity =>
@@ -534,6 +628,31 @@ namespace Entity
                     .HasColumnType("numeric(18,8)");
 
                 entity.Property(e => e.TakerOrderId).HasColumnName("taker_order_id");
+            });
+
+            modelBuilder.Entity<TradeTransaction>(entity =>
+            {
+                entity.ToTable("trade_transaction");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
+
+                entity.Property(e => e.TradeId).HasColumnName("trade_id");
+
+                entity.Property(e => e.TransactionId).HasColumnName("transaction_id");
+
+                entity.HasOne(d => d.Trade)
+                    .WithMany(p => p.TradeTransaction)
+                    .HasForeignKey(d => d.TradeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("trade_transaction_trade_id_fkey");
+
+                entity.HasOne(d => d.Transaction)
+                    .WithMany(p => p.TradeTransaction)
+                    .HasForeignKey(d => d.TransactionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("trade_transaction_transaction_id_fkey");
             });
 
             modelBuilder.Entity<Transaction>(entity =>
@@ -625,8 +744,6 @@ namespace Entity
             modelBuilder.HasSequence<int>("order_id_seq");
 
             modelBuilder.HasSequence<int>("user_id_seq");
-
-            _globalQueryFilterRegisterer.RegisterGlobalQueryFilters(modelBuilder);
         }
     }
 }

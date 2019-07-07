@@ -5,8 +5,13 @@ namespace Entity
 {
     public partial class Trade
     {
+        public Trade()
+        {
+            TradeTransaction = new HashSet<TradeTransaction>();
+        }
+
         public int Id { get; set; }
-        public long Amount { get; set; }
+        public long Quantity { get; set; }
         public decimal Rate { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime CreatedOn { get; set; }
@@ -18,5 +23,6 @@ namespace Entity
 
         public virtual Currency FeeCurrency { get; set; }
         public virtual Orders Order { get; set; }
+        public virtual ICollection<TradeTransaction> TradeTransaction { get; set; }
     }
 }

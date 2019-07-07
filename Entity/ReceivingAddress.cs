@@ -17,6 +17,7 @@ namespace Entity
         public bool IsDeleted { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime ModifiedOn { get; set; }
+        public short PartitionId { get; set; }
 
         public virtual Currency Currency { get; set; }
         public virtual Users User { get; set; }

@@ -13,13 +13,18 @@ namespace Entity
         public bool IsDeleted { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime ModifiedOn { get; set; }
-        public long? TradeMinQuantity { get; set; }
-        public decimal? MinRate { get; set; }
-        public decimal? MaxRate { get; set; }
+        public long TradeMinQuantity { get; set; }
+        public decimal MinRate { get; set; }
+        public decimal MaxRate { get; set; }
         public bool NewOrderAllowed { get; set; }
         public bool CancelAllowed { get; set; }
+        public long TradeMaxQuantity { get; set; }
+        public long QuantityStepSize { get; set; }
+        public short TradeFeeId { get; set; }
+        public decimal RateStepSize { get; set; }
 
         public virtual Currency QuoteCurrency { get; set; }
         public virtual Currency TradeCurrency { get; set; }
+        public virtual TradeFeeHistory TradeFee { get; set; }
     }
 }
