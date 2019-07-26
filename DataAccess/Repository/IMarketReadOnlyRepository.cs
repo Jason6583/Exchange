@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using APIModel;
 using Entity;
 
-namespace Logic
+namespace DataAccess.Repository
 {
-    public interface IMarketService
+    public interface IMarketReadOnlyRepository
     {
         List<Market> GetMarketsWithFee();
-        List<MarketApiModel> GetMarketsForApi();
     }
 }

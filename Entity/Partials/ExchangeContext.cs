@@ -26,6 +26,7 @@ namespace Entity
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseNpgsql(_connectionString);
+                optionsBuilder.UseLazyLoadingProxies();
                 optionsBuilder.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning))
                     .ConfigureWarnings(warnings => warnings.Throw(CoreEventId.IncludeIgnoredWarning));
             }

@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DataAccess.UnitOfWork;
-using Entity;
+﻿using System.Collections.Generic;
+using APIModel;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace API
 {
     [Route("api/[controller]")]
-    public class CurrenciesController : Controller
+    [ApiController]
+    public class CurrenciesController : ControllerBase
     {
         private readonly ICurrencyService _currencyService;
         public CurrenciesController(ICurrencyService currencyService)
@@ -21,9 +16,9 @@ namespace API
         }
 
         [HttpGet]
-        public IEnumerable<Currency> Get()
+        public IEnumerable<CurrencyApiModel> Get()
         {
-            return _currencyService.GetCurrencies();
+            return _currencyService.GetCurrenciesForApi();
         }
     }
 }

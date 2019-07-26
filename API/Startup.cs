@@ -42,13 +42,6 @@ namespace API
                 app.UseHsts();
             }
 
-            var webSocketOptions = new WebSocketOptions()
-            {
-                KeepAliveInterval = TimeSpan.FromSeconds(120),
-                ReceiveBufferSize = 0
-            };
-
-
             app.UseHttpsRedirection();
             app.UseMvc();
         }

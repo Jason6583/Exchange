@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29020.237
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entity", "Entity\Entity.csproj", "{4EDBC291-E1EF-4F2D-9FC0-3BC3CFB414E8}"
 EndProject
@@ -23,7 +23,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F2394637
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entity.Tests", "Entity.Tests\Entity.Tests.csproj", "{FDD8A7ED-D6E7-40E4-9EED-4B5CD7387CD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticker", "Ticker\Ticker.csproj", "{418A1BA5-D70A-4710-876B-D5E6C18BE6B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ticker", "Ticker\Ticker.csproj", "{418A1BA5-D70A-4710-876B-D5E6C18BE6B8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIModel", "APIModel\APIModel.csproj", "{E7B5649C-63EC-498A-904E-074188A1EBEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Util", "Util\Util.csproj", "{6C3D507C-C952-4A79-9F2F-1720AB1FD15A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +75,14 @@ Global
 		{418A1BA5-D70A-4710-876B-D5E6C18BE6B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{418A1BA5-D70A-4710-876B-D5E6C18BE6B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{418A1BA5-D70A-4710-876B-D5E6C18BE6B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7B5649C-63EC-498A-904E-074188A1EBEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7B5649C-63EC-498A-904E-074188A1EBEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7B5649C-63EC-498A-904E-074188A1EBEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7B5649C-63EC-498A-904E-074188A1EBEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C3D507C-C952-4A79-9F2F-1720AB1FD15A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C3D507C-C952-4A79-9F2F-1720AB1FD15A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C3D507C-C952-4A79-9F2F-1720AB1FD15A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C3D507C-C952-4A79-9F2F-1720AB1FD15A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

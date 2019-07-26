@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using APIModel;
 using DataAccess.UnitOfWork;
 using Entity;
+using Util;
 
 namespace Logic
 {
@@ -20,5 +23,17 @@ namespace Logic
         {
             return _readOnlyContext.BalanceRepository.GetBalance(userId);
         }
+
+        public List<BalanceApiModel> GetBalanceForApi(int userId)
+        {
+            return _readOnlyContext.BalanceRepository.GetBalance(userId)
+                .Select(x => new BalanceApiModel
+                {
+                    CurrencyId = x.CurrencyId,
+                    LockedBalance = x.LockedBalance.ToCoin(),
+                    SpendableBalance = x.SpendableBalance.ToCoin()
+                }).ToList();
+        }
+
     }
 }

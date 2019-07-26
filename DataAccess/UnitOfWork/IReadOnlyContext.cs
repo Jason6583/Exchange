@@ -10,5 +10,6 @@ namespace DataAccess.UnitOfWork
         IOrdersReadOnlyRepository OrdersRepository { get; }
         ICurrencyReadOnlyRepository CurrencyRepository { get; }
         IBalanceReadOnlyRepository BalanceRepository { get; }
+        IMarketReadOnlyRepository MarketRepository { get; }
     }
 }

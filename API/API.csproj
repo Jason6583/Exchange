@@ -11,11 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.3" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.6" />
+    <PackageReference Include="NSwag.AspNetCore" Version="13.0.4" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\APIModel\APIModel.csproj" />
     <ProjectReference Include="..\Logic\Logic.csproj" />
   </ItemGroup>
 

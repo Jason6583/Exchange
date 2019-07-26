@@ -18,6 +18,7 @@ namespace DataAccess.UnitOfWork
         private IOrdersReadOnlyRepository _ordersRepository;
         private ICurrencyReadOnlyRepository _currencyRepository;
         private IBalanceReadOnlyRepository _balanceRepository;
+        private IMarketReadOnlyRepository _marketRepository;
         public IOrdersReadOnlyRepository OrdersRepository
         {
             get
@@ -48,6 +49,17 @@ namespace DataAccess.UnitOfWork
                     _balanceRepository = new BalanceRepository(_dbContext.Set<Balance>());
 
                 return _balanceRepository;
+            }
+        }
+
+        public IMarketReadOnlyRepository MarketRepository
+        {
+            get
+            {
+                if (_marketRepository == null)
+                    _marketRepository = new MarketRepository(_dbContext.Set<Market>());
+
+                return _marketRepository;
             }
         }
     }

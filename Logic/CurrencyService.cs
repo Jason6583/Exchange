@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using APIModel;
 using DataAccess.UnitOfWork;
 using Entity;
+using Util;
 
 namespace Logic
 {
@@ -19,6 +22,23 @@ namespace Logic
         public List<Currency> GetCurrencies()
         {
             return _readonlyContext.CurrencyRepository.GetAllCurrencies();
+        }
+
+        public List<CurrencyApiModel> GetCurrenciesForApi()
+        {
+            return _readonlyContext.CurrencyRepository.GetAllCurrencies()
+                .Select(x => new CurrencyApiModel
+                {
+                    Code = x.Code,
+                    DailyMaxDepositAmount = x.DailyMaxDepositAmount.ToCoin(),
+                    DailyMaxWithdrawAmount = x.DailyMaxWithdrawAmount.ToCoin(),
+                    Id = x.Id,
+                    MaxDepositAmount = x.MaxDepositAmount.ToCoin(),
+                    MaxWithdrawAmount = x.MaxWithdrawAmount.ToCoin(),
+                    MinDepositAmount = x.MinDepositAmount.ToCoin(),
+                    MinWithdrawAmount = x.MinWithdrawAmount.ToCoin(),
+                    Name = x.Name
+                }).ToList();
         }
     }
 }
