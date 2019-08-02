@@ -31,6 +31,10 @@ namespace Entity
         public long DailyMaxDepositAmount { get; set; }
         public long DailyMaxWithdrawAmount { get; set; }
         public bool IsVirtual { get; set; }
+        public bool DepositAllowed { get; set; }
+        public bool WithdrawalAllowed { get; set; }
+        public string DepositHaltedReason { get; set; }
+        public string WithdrawHaltedReason { get; set; }
 
         public virtual ICollection<Balance> Balance { get; set; }
         public virtual ICollection<DepositWithdrawRequest> DepositWithdrawRequest { get; set; }

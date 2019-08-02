@@ -27,6 +27,8 @@ namespace Entity
         public bool IsClosed { get; set; }
         public bool IsFreezed { get; set; }
         public bool IsDebitAllowed { get; set; }
+        public string FreezedReason { get; set; }
+        public string DebitBlockedReason { get; set; }
 
         public virtual KycInfo KycInfo { get; set; }
         public virtual ICollection<Balance> Balance { get; set; }

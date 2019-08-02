@@ -26,7 +26,7 @@ namespace Entity
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("ProductVersion", "2.2.3-servicing-35854");
+            modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
             modelBuilder.Entity<Balance>(entity =>
             {
@@ -99,6 +99,12 @@ namespace Entity
 
                 entity.Property(e => e.DailyMaxWithdrawAmount).HasColumnName("daily_max_withdraw_amount");
 
+                entity.Property(e => e.DepositAllowed).HasColumnName("deposit_allowed");
+
+                entity.Property(e => e.DepositHaltedReason)
+                    .HasColumnName("deposit_halted_reason")
+                    .HasMaxLength(2048);
+
                 entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
 
                 entity.Property(e => e.IsVirtual).HasColumnName("is_virtual");
@@ -119,6 +125,12 @@ namespace Entity
                     .IsRequired()
                     .HasColumnName("name")
                     .HasMaxLength(250);
+
+                entity.Property(e => e.WithdrawHaltedReason)
+                    .HasColumnName("withdraw_halted_reason")
+                    .HasMaxLength(2048);
+
+                entity.Property(e => e.WithdrawalAllowed).HasColumnName("withdrawal_allowed");
             });
 
             modelBuilder.Entity<DepositWithdrawRequest>(entity =>
@@ -274,6 +286,10 @@ namespace Entity
                     .HasColumnName("trading_end")
                     .HasColumnType("timestamp with time zone");
 
+                entity.Property(e => e.TradingHaltedReason)
+                    .HasColumnName("trading_halted_reason")
+                    .HasMaxLength(2048);
+
                 entity.Property(e => e.TradingStart)
                     .HasColumnName("trading_start")
                     .HasColumnType("timestamp with time zone");
@@ -305,6 +321,14 @@ namespace Entity
                     .HasColumnName("id")
                     .HasDefaultValueSql("nextval('order_id_seq'::regclass)");
 
+                entity.Property(e => e.CancelOn)
+                    .HasColumnName("cancel_on")
+                    .HasColumnType("timestamp with time zone");
+
+                entity.Property(e => e.CancelledOn)
+                    .HasColumnName("cancelled_on")
+                    .HasColumnType("timestamp with time zone");
+
                 entity.Property(e => e.Cost).HasColumnName("cost");
 
                 entity.Property(e => e.CreatedOn)
@@ -315,7 +339,11 @@ namespace Entity
 
                 entity.Property(e => e.FeeCurrencyId).HasColumnName("fee_currency_id");
 
+                entity.Property(e => e.IcebergQuantity).HasColumnName("iceberg_quantity");
+
                 entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
+
+                entity.Property(e => e.IsIceberg).HasColumnName("is_iceberg");
 
                 entity.Property(e => e.LockedBalance).HasColumnName("locked_balance");
 
@@ -324,6 +352,8 @@ namespace Entity
                 entity.Property(e => e.ModifiedOn)
                     .HasColumnName("modified_on")
                     .HasColumnType("timestamp with time zone");
+
+                entity.Property(e => e.OrderCondition).HasColumnName("order_condition");
 
                 entity.Property(e => e.OrderStatus).HasColumnName("order_status");
 
@@ -592,6 +622,10 @@ namespace Entity
                     .HasColumnName("modified_on")
                     .HasColumnType("timestamp with time zone");
 
+                entity.Property(e => e.Note)
+                    .HasColumnName("note")
+                    .HasMaxLength(2048);
+
                 entity.Property(e => e.TakerFeePercent)
                     .HasColumnName("taker_fee_percent")
                     .HasColumnType("numeric(6,4)");
@@ -710,6 +744,10 @@ namespace Entity
                     .HasColumnName("created_on")
                     .HasColumnType("timestamp with time zone");
 
+                entity.Property(e => e.DebitBlockedReason)
+                    .HasColumnName("debit_blocked_reason")
+                    .HasMaxLength(2048);
+
                 entity.Property(e => e.Email)
                     .HasColumnName("email")
                     .HasMaxLength(250);
@@ -717,6 +755,10 @@ namespace Entity
                 entity.Property(e => e.FirstName)
                     .HasColumnName("first_name")
                     .HasMaxLength(250);
+
+                entity.Property(e => e.FreezedReason)
+                    .HasColumnName("freezed_reason")
+                    .HasMaxLength(2048);
 
                 entity.Property(e => e.IsClosed).HasColumnName("is_closed");
 

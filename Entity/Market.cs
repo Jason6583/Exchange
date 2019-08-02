@@ -22,6 +22,7 @@ namespace Entity
         public long QuantityStepSize { get; set; }
         public short TradeFeeId { get; set; }
         public decimal RateStepSize { get; set; }
+        public string TradingHaltedReason { get; set; }
 
         public virtual Currency QuoteCurrency { get; set; }
         public virtual Currency TradeCurrency { get; set; }
