@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using APIModel.RequestModels;
+using Entity;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API
@@ -23,8 +26,11 @@ namespace API
         }
 
         [HttpPost]
-        public void Post([FromBody]string value)
+        [ProducesResponseType(typeof(Orders), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<Orders> Post([FromBody]OrderRequestModel order)
         {
+            return null;
         }
 
         // PUT api/<controller>/5

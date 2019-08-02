@@ -43,25 +43,25 @@ namespace Ticker
                     if (message.Length == 5)//TODO add proper condition
                     {
                         var tradeTime = 0;
-                        decimal price = 0;
+                        decimal rate = 0;
                         decimal volume = 0;
                         if (recentTick == null || recentTick.Open != tradeTime)
                         {
                             if (!_candleSticks.TryGetValue(tradeTime, out recentTick))
                             {
-                                recentTick = new CandleStick() { Start = tradeTime, Close = price, Count = 1, High = price, Low = price, Open = price, Volume = volume };
+                                recentTick = new CandleStick() { Start = tradeTime, Close = rate, Count = 1, High = rate, Low = rate, Open = rate, Volume = volume };
                                 _candleSticks.Add(tradeTime, recentTick);
                             }
                         }
                         else
                         {
-                            recentTick.Close = price;
+                            recentTick.Close = rate;
 
-                            if (price > recentTick.High)
-                                recentTick.High = price;
+                            if (rate > recentTick.High)
+                                recentTick.High = rate;
 
-                            if (price < recentTick.Low)
-                                recentTick.Low = price;
+                            if (rate < recentTick.Low)
+                                recentTick.Low = rate;
 
                             recentTick.Count++;
                             recentTick.Volume += volume;
