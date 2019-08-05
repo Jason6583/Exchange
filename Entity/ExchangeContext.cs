@@ -244,13 +244,23 @@ namespace Entity
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.BookOrCancelAllowed).HasColumnName("book_or_cancel_allowed");
+
                 entity.Property(e => e.CancelAllowed).HasColumnName("cancel_allowed");
 
                 entity.Property(e => e.CreatedOn)
                     .HasColumnName("created_on")
                     .HasColumnType("timestamp with time zone");
 
+                entity.Property(e => e.FillOrKillOrderAllowed).HasColumnName("fill_or_kill_order_allowed");
+
+                entity.Property(e => e.GoodTillDateOrderAllowed).HasColumnName("good_till_date_order_allowed");
+
+                entity.Property(e => e.ImmediateOrCancelAllowed).HasColumnName("immediate_or_cancel_allowed");
+
                 entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
+
+                entity.Property(e => e.MarketOrderAllowed).HasColumnName("market_order_allowed");
 
                 entity.Property(e => e.MaxRate)
                     .HasColumnName("max_rate")
@@ -273,6 +283,10 @@ namespace Entity
                 entity.Property(e => e.RateStepSize)
                     .HasColumnName("rate_step_size")
                     .HasColumnType("numeric(18,8)");
+
+                entity.Property(e => e.StopLimitOrderAllowed).HasColumnName("stop_limit_order_allowed");
+
+                entity.Property(e => e.StopLossOrderAllowed).HasColumnName("stop_loss_order_allowed");
 
                 entity.Property(e => e.TradeCurrencyId).HasColumnName("trade_currency_id");
 
@@ -342,8 +356,6 @@ namespace Entity
                 entity.Property(e => e.IcebergQuantity).HasColumnName("iceberg_quantity");
 
                 entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
-
-                entity.Property(e => e.IsIceberg).HasColumnName("is_iceberg");
 
                 entity.Property(e => e.LockedBalance).HasColumnName("locked_balance");
 

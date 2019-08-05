@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace APIModel
+namespace APIModel.ResponseModels
 {
     public class MarketApiModel
     {

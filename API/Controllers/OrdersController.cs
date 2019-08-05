@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using APIModel.RequestModels;
+using APIModel.ResponseModels;
 using Entity;
+using Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,10 +16,16 @@ namespace API
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IOrderService _orderService;
+        public OrdersController(IOrderService orderService)
         {
-            return new string[] { "value1", "value2" };
+            _orderService = orderService;
+        }
+
+        [HttpGet]
+        public List<OrderResponseModel> Get([FromQuery]PageModel pageModel)
+        {
+            return _orderService.GetOrdersForApi(4, pageModel?.PageNumber ?? 1, pageModel?.PageSize ?? 50);
         }
 
         [HttpGet("{id}")]
@@ -30,7 +39,13 @@ namespace API
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<Orders> Post([FromBody]OrderRequestModel order)
         {
-            return null;
+            var result = _orderService.PlaceOrder(4, order);
+            if (result.ErrorCode != 0)
+            {
+                ModelState.AddModelError("", result.ErrorMessage);
+                return BadRequest(ModelState);
+            }
+            return result.Entity;
         }
 
         // PUT api/<controller>/5

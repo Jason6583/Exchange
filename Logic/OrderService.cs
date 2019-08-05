@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using APIModel.RequestModels;
+using APIModel.ResponseModels;
 using DataAccess.UnitOfWork;
 using Entity;
+using Util;
 
 namespace Logic
 {
@@ -21,11 +24,17 @@ namespace Logic
             return _readOnlyContext.OrdersRepository.Find(id);
         }
 
-        public BusinessOperationResult<Orders> PlaceOrder()
+        public List<OrderResponseModel> GetOrdersForApi(int userId, int pageNumber = 1, int pageSize = 50)
+        {
+            return _readOnlyContext.OrdersRepository.GetOrdersForApi(userId, pageNumber, pageSize);
+        }
+
+        public BusinessOperationResult<Orders> PlaceOrder(int userId, OrderRequestModel orderRequestModel)
         {
             using (var uow = _unitOfWork.GetNewUnitOfWork())
             {
-                var result = uow.OrdersRepository.PlaceOrder();
+                var icebergQuantity = orderRequestModel.IcebergQuantity.HasValue ? orderRequestModel.IcebergQuantity.Value.ToSatoshi() : 0;
+                var result = uow.OrdersRepository.PlaceOrder(userId, orderRequestModel.MarketId.Value, orderRequestModel.IsBuy.Value, orderRequestModel.Quantity.Value.ToSatoshi(), orderRequestModel.Rate.Value, orderRequestModel.StopRate.Value, (short)orderRequestModel.OrderType.Value, (short)orderRequestModel.OrderCondition.Value, orderRequestModel.CancelOn, icebergQuantity);
                 var bor = new BusinessOperationResult<Orders> { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, Id = result.OrderId };
                 if (result.ErrorCode == 0)
                     bor.Entity = uow.OrdersRepository.Find(result.OrderId);

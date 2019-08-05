@@ -23,7 +23,7 @@ namespace DataAccess.UnitOfWork
             get
             {
                 if (_ordersRepository == null)
-                    _ordersRepository = new OrdersRepository(_dbContext.Set<Orders>());
+                    _ordersRepository = new OrdersRepository(_dbContext.Set<Orders>(), _dbContext);
 
                 return _ordersRepository;
             }
@@ -47,7 +47,7 @@ namespace DataAccess.UnitOfWork
 
         public IUnitOfWork GetNewUnitOfWork()
         {
-            throw new NotImplementedException();
+            return new UnitOfWork(new ExchangeContext(new GlobalQueryFilterRegisterer(), "Host=localhost;Database=Exchange;Username=postgres;Password=root"));
         }
 
         public void SaveChanges()

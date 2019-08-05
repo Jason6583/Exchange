@@ -23,6 +23,13 @@ namespace Entity
         public short TradeFeeId { get; set; }
         public decimal RateStepSize { get; set; }
         public string TradingHaltedReason { get; set; }
+        public bool? MarketOrderAllowed { get; set; }
+        public bool? StopLimitOrderAllowed { get; set; }
+        public bool? StopLossOrderAllowed { get; set; }
+        public bool? GoodTillDateOrderAllowed { get; set; }
+        public bool? FillOrKillOrderAllowed { get; set; }
+        public bool? BookOrCancelAllowed { get; set; }
+        public bool? ImmediateOrCancelAllowed { get; set; }
 
         public virtual Currency QuoteCurrency { get; set; }
         public virtual Currency TradeCurrency { get; set; }

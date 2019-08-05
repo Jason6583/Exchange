@@ -8,6 +8,6 @@ namespace Entity.Models
     {
         public int ErrorCode { get; set; }
         public string ErrorMessage { get; set; }
-        public int OrderId { get; set; }
+        public int? OrderId { get; set; }
     }
 }

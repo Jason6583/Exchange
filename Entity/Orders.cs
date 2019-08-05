@@ -30,7 +30,6 @@ namespace Entity
         public short TradeFeeId { get; set; }
         public DateTime? CancelOn { get; set; }
         public DateTime? CancelledOn { get; set; }
-        public bool IsIceberg { get; set; }
         public long? IcebergQuantity { get; set; }
 
         public virtual TradeFeeHistory TradeFee { get; set; }

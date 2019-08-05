@@ -24,7 +24,7 @@ namespace DataAccess.UnitOfWork
             get
             {
                 if (_ordersRepository == null)
-                    _ordersRepository = new OrdersRepository(_dbContext.Set<Orders>());
+                    _ordersRepository = new OrdersRepository(_dbContext.Set<Orders>(), _dbContext);
 
                 return _ordersRepository;
             }
