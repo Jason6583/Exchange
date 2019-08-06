@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Entity
+﻿namespace Entity
 {
     public partial class OrdersTransaction
     {

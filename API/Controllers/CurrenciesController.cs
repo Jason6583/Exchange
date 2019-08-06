@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using APIModel;
-using APIModel.ResponseModels;
+﻿using APIModel.ResponseModels;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace API
 {

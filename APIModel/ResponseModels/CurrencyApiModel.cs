@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace APIModel.ResponseModels
+﻿namespace APIModel.ResponseModels
 {
     public class CurrencyApiModel
     {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DataAccess.Repository
+﻿namespace DataAccess.Repository
 {
     public interface IReadOnlyRepository<T>
     {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DataAccess.Repository;
+﻿using DataAccess.Repository;
 using Entity;
 using Microsoft.EntityFrameworkCore;
 

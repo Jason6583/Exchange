@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\APIModel\APIModel.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\Logic\Logic.csproj" />
   </ItemGroup>
 

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using APIModel.RequestModels;
+﻿using APIModel.RequestModels;
 using APIModel.ResponseModels;
 using DataAccess.UnitOfWork;
 using Entity;
+using System.Collections.Generic;
 using Util;
 
 namespace Logic

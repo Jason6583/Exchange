@@ -1,7 +1,5 @@
-﻿using System;
+﻿using Entity;
 using System.Collections.Generic;
-using System.Text;
-using Entity;
 
 namespace DataAccess.Repository
 {
