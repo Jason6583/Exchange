@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using API.Middleware;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -21,7 +22,12 @@ namespace API
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddBusinessServices();
-            services.AddOpenApiDocument();
+            services.AddSwaggerDocument(config =>
+            {
+                config.Title = "Exchange API";
+                config.Version = "0.9";
+                config.OperationProcessors.Add(new AddRequiredHeaderParameter());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,8 +43,8 @@ namespace API
             }
 
             app.UseHttpsRedirection();
+            app.UseMiddleware<DuplicateRequestMiddleware>();
             app.UseMvc();
-
             app.UseOpenApi();
             app.UseSwaggerUi3();
         }

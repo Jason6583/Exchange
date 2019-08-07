@@ -11,7 +11,7 @@ namespace API
     {
         public static void AddBusinessServices(this IServiceCollection services)
         {
-            services.AddSingleton<IRedisCache, RedisCache>();
+            services.AddSingleton<IRedisCache>((serviceProvider) => { return new RedisCache("127.0.0.1:6379"); });
             services.AddSingleton<IGlobalQueryFilterRegisterer, GlobalQueryFilterRegisterer>();
             services.AddScoped<DbContext>(x => new ExchangeContext(new GlobalQueryFilterRegisterer(), "Host=localhost;Database=Exchange;Username=postgres;Password=root"));
             services.AddScoped<IUnitOfWork, UnitOfWork>();

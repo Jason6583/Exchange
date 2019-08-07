@@ -28,7 +28,7 @@ namespace API.Middleware
                 if (redisCache.Exists($"req-{requestId}"))
                 {
                     httpContext.Response.StatusCode = StatusCodes.Status409Conflict;
-                    await httpContext.Response.WriteAsync("duplicate request with same x-request-id.");
+                    await httpContext.Response.WriteAsync("{ \"x-request-id\": [ \"duplicate request id.\" ] } ");
                     return;
                 }
                 else
@@ -37,7 +37,8 @@ namespace API.Middleware
                 }
             }
             await _next(httpContext);
-            await task;
+            if (task != null)
+                await task;
         }
     }
 }
