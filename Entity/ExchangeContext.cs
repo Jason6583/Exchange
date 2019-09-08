@@ -191,7 +191,15 @@ namespace Entity
                     .HasColumnName("created_on")
                     .HasColumnType("timestamp with time zone");
 
+                entity.Property(e => e.FirstName)
+                    .HasColumnName("first_name")
+                    .HasMaxLength(250);
+
                 entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
+
+                entity.Property(e => e.LastName)
+                    .HasColumnName("last_name")
+                    .HasMaxLength(250);
 
                 entity.Property(e => e.ModifiedOn)
                     .HasColumnName("modified_on")
@@ -762,10 +770,6 @@ namespace Entity
                     .HasColumnName("email")
                     .HasMaxLength(250);
 
-                entity.Property(e => e.FirstName)
-                    .HasColumnName("first_name")
-                    .HasMaxLength(250);
-
                 entity.Property(e => e.FreezedReason)
                     .HasColumnName("freezed_reason")
                     .HasMaxLength(2048);
@@ -777,10 +781,6 @@ namespace Entity
                 entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
 
                 entity.Property(e => e.IsFreezed).HasColumnName("is_freezed");
-
-                entity.Property(e => e.LastName)
-                    .HasColumnName("last_name")
-                    .HasMaxLength(250);
 
                 entity.Property(e => e.MobileNumber)
                     .HasColumnName("mobile_number")

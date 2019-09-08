@@ -11,6 +11,8 @@ namespace Entity
         public DateTime ModifiedOn { get; set; }
         public bool IsDeleted { get; set; }
         public string PanNumber { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
         public virtual Users User { get; set; }
     }

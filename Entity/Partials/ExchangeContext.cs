@@ -7,8 +7,8 @@ namespace Entity
 {
     public partial class ExchangeContext : DbContext
     {
-        private string _connectionString;
-        private IGlobalQueryFilterRegisterer _globalQueryFilterRegisterer;
+        private readonly string _connectionString;
+        private readonly IGlobalQueryFilterRegisterer _globalQueryFilterRegisterer;
         public ExchangeContext(IGlobalQueryFilterRegisterer globalQueryFilterRegisterer, string connectionSting)
         {
             _globalQueryFilterRegisterer = globalQueryFilterRegisterer ?? throw new ArgumentNullException(nameof(globalQueryFilterRegisterer));
