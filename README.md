@@ -2,10 +2,15 @@
 crypto currency exchange.
 bitcoin exchange
 
-supports multiple crypto currency and fiat currency
-supports multiple markets.
-supports multiple order types
-       limit
+Supports multiple crypto currencies (Bitcoin, Ethereum, BitcoinCash, Litecoin, USDT, Tron, EOS, etc)
+
+Supports multiple fiat currencies (USD, EUR, GBP, etc)
+
+Supports multiple markets.
+
+Supports multiple order types
+       
+       limit       
        market
        stop limit
        stop loss
