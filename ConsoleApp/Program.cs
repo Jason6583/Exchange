@@ -4,13 +4,13 @@ namespace ConsoleApp
 {
     class Program
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
         }
     }
 }
-
 
 //this project is used for generating dbcontext from database reverse engineering
 //steps to do reverse engineering

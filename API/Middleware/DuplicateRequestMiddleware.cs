@@ -13,8 +13,16 @@ namespace API.Middleware
             _next = next;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2007:Consider calling ConfigureAwait on the awaited task", Justification = "<Pending>")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>")]
         public async Task Invoke(HttpContext httpContext, IRedisCache redisCache)
         {
+            if (httpContext == null)
+                throw new ArgumentNullException(nameof(httpContext));
+
+            if (redisCache == null)
+                throw new ArgumentNullException(nameof(redisCache));
+
             Task task = null;
             var requestId = httpContext.Request.Headers["x-request-id"];
             if (!string.IsNullOrWhiteSpace(requestId))
@@ -33,7 +41,7 @@ namespace API.Middleware
                 }
                 else
                 {
-                    task = redisCache.SetAsync($"req-{requestId}", "", TimeSpan.FromMinutes(5));
+                    task = redisCache.StringSetAsync($"req-{requestId}", "", TimeSpan.FromMinutes(5));
                 }
             }
             await _next(httpContext);

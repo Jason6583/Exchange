@@ -14,7 +14,7 @@ namespace DataAccess.Repository
 
         public List<Balance> GetBalance(int userId)
         {
-            return _dbSet.Where(x => x.UserId == userId).ToList();
+            return DbSet.Where(x => x.UserId == userId).ToList();
         }
     }
 }

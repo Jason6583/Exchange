@@ -2,6 +2,7 @@
 using APIModel.ResponseModels;
 using DataAccess.UnitOfWork;
 using Entity;
+using System;
 using System.Collections.Generic;
 using Util;
 
@@ -29,6 +30,9 @@ namespace Logic
 
         public BusinessOperationResult<Orders> PlaceOrder(int userId, OrderRequestModel orderRequestModel)
         {
+            if (orderRequestModel == null)
+                throw new ArgumentNullException(nameof(orderRequestModel));
+
             using (var uow = _unitOfWork.GetNewUnitOfWork())
             {
                 var icebergQuantity = orderRequestModel.IcebergQuantity.HasValue ? orderRequestModel.IcebergQuantity.Value.ToSatoshi() : 0;

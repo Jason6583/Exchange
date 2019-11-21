@@ -1,5 +1,4 @@
-﻿using Entity.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using System;
 
@@ -8,7 +7,7 @@ namespace Entity
     public partial class ExchangeContext : DbContext
     {
         private readonly string _connectionString;
-        private readonly IGlobalQueryFilterRegisterer _globalQueryFilterRegisterer;
+        private readonly IGlobalQueryFilterRegisterer _globalQueryFilterRegisterer; //TODO add unit test to check for _globalQueryFilterRegisterer executed during OnModelCreating
         public ExchangeContext(IGlobalQueryFilterRegisterer globalQueryFilterRegisterer, string connectionSting)
         {
             _globalQueryFilterRegisterer = globalQueryFilterRegisterer ?? throw new ArgumentNullException(nameof(globalQueryFilterRegisterer));
@@ -18,8 +17,8 @@ namespace Entity
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (_globalQueryFilterRegisterer == null)
-                throw new ArgumentNullException(nameof(_globalQueryFilterRegisterer));
+            if (optionsBuilder == null)
+                throw new ArgumentNullException(nameof(optionsBuilder));
 
             if (!optionsBuilder.IsConfigured)
             {
@@ -30,9 +29,9 @@ namespace Entity
             }
         }
 
-        public PlaceOrderResult PlaceOrder(int userId, short marketId, bool side, long quantity, decimal rate, decimal stopRate, OrderType type)
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder)
         {
-            return null;
+            _globalQueryFilterRegisterer.RegisterGlobalQueryFilters(modelBuilder);
         }
     }
 }

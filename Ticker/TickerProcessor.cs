@@ -11,7 +11,7 @@ namespace Ticker
         private readonly SortedDictionary<int, CandleStick> _candleSticks;
         private CancellationToken _cancellationToken;
         private CandleStick recentTick;
-        private CandleStick firstTick;
+
         public TickerProcessor()
         {
             _candleSticks = new SortedDictionary<int, CandleStick>();

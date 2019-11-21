@@ -13,12 +13,12 @@ namespace DataAccess.Repository
 
         public void Add(T entity)
         {
-            _dbSet.Add(entity);
+            DbSet.Add(entity);
         }
 
         public void Delete(T entity)
         {
-            _dbSet.Remove(entity);
+            DbSet.Remove(entity);
         }
 
         protected NpgsqlParameter InParam(string name, int? value)

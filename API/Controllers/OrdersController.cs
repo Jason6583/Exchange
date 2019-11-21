@@ -24,12 +24,6 @@ namespace API
             return _orderService.GetOrdersForApi(4, pageModel?.PageNumber ?? 1, pageModel?.PageSize ?? 50);
         }
 
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         [HttpPost]
         [ProducesResponseType(typeof(Orders), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -42,18 +36,6 @@ namespace API
                 return BadRequest(ModelState);
             }
             return result.Entity;
-        }
-
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

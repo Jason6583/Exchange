@@ -14,7 +14,7 @@ namespace DataAccess.Repository
 
         public List<Market> GetMarketsWithFee()
         {
-            var v = _dbSet.Include(x => x.TradeFee).ToList();
+            var v = DbSet.Include(x => x.TradeFee).ToList();
             return v;
         }
     }

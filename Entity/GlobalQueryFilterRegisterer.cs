@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Entity
 {
@@ -6,6 +7,9 @@ namespace Entity
     {
         public void RegisterGlobalQueryFilters(ModelBuilder modelBuilder)
         {
+            if (modelBuilder == null)
+                throw new ArgumentNullException(nameof(modelBuilder));
+
             modelBuilder.Entity<Balance>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<Currency>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<DepositWithdrawRequest>().HasQueryFilter(x => !x.IsDeleted);

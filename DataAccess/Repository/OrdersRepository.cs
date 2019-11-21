@@ -19,7 +19,7 @@ namespace DataAccess.Repository
 
         public IQueryable<Orders> GetRecentOrders(int userId, short market)
         {
-            return _dbSet.Where(x => x.UserId == userId && x.MarketId == market);
+            return DbSet.Where(x => x.UserId == userId && x.MarketId == market);
         }
 
         public PlaceOrderResult PlaceOrder(int userId, short marketId, bool side, long quantity, decimal rate, decimal stopRate, short orderType, short orderCondition, DateTime? cancelOn, long? icebergQuantity)
@@ -49,7 +49,7 @@ namespace DataAccess.Repository
 
         public List<OrderResponseModel> GetOrdersForApi(int userId, int pageNumber = 1, int pageSize = 50)
         {
-            return _dbSet.Where(x => x.UserId == userId).OrderBy(x => x.CreatedOn).Skip((pageNumber - 1) * pageSize).Take(pageSize)
+            return DbSet.Where(x => x.UserId == userId).OrderBy(x => x.CreatedOn).Skip((pageNumber - 1) * pageSize).Take(pageSize)
                 .Select(x => new OrderResponseModel
                 {
                     CancelOn = x.CancelOn,

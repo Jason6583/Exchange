@@ -1,0 +1,43 @@
+﻿@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IdentityServer4.Models.ErrorMessage
+
+<table>
+	<tr>
+		<td>Name</td>
+		<td>Value</td>
+	</tr>
+	<tr>
+		<td>@Html.LabelFor(x => x.ClientId)</td>
+		<td>@Model.ClientId</td>
+	</tr>
+	<tr>
+		<td>@Html.LabelFor(x => x.DisplayMode)</td>
+		<td>@Model.DisplayMode</td>
+	</tr>
+	<tr>
+		<td>@Html.LabelFor(x => x.Error)</td>
+		<td>@Model.Error</td>
+	</tr>
+	<tr>
+		<td>@Html.LabelFor(x => x.ErrorDescription)</td>
+		<td>@Model.ErrorDescription</td>
+	</tr>
+	<tr>
+		<td>@Html.LabelFor(x => x.RedirectUri)</td>
+		<td>@Model.RedirectUri</td>
+	</tr>
+	<tr>
+		<td>@Html.LabelFor(x => x.RequestId)</td>
+		<td>@Model.RequestId</td>
+	</tr>
+	<tr>
+		<td>@Html.LabelFor(x => x.ResponseMode)</td>
+		<td>@Model.ResponseMode</td>
+	</tr>
+	<tr>
+		<td>@Html.LabelFor(x => x.UiLocales)</td>
+		<td>@Model.UiLocales</td>
+	</tr>
+</table>

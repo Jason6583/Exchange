@@ -1,4 +1,7 @@
-﻿namespace Entity
+﻿using System;
+using System.Collections.Generic;
+
+namespace Entity
 {
     public partial class SendingAddress
     {

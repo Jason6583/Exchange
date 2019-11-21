@@ -26,28 +26,31 @@ namespace Infrastructure
                 return _connectionMultiplexer;
             }
         }
+
         public RedisCache(string connectionString)
         {
             _connectionString = connectionString;
             lockObject = new object();
         }
 
-        public RedisValue Get(string key)
+        public RedisValue StringGet(string key)
         {
             return ConnectionMultiplexer.GetDatabase().StringGet(key);
         }
 
-        public async Task<RedisValue> GetAsync(string key)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2007:Consider calling ConfigureAwait on the awaited task", Justification = "<Pending>")]
+        public async Task<RedisValue> StringGetAsync(string key)
         {
             return await ConnectionMultiplexer.GetDatabase().StringGetAsync(key);
         }
 
-        public bool Set(string key, string value, TimeSpan? expiry)
+        public bool StringSet(string key, string value, TimeSpan? expiry)
         {
             return ConnectionMultiplexer.GetDatabase().StringSet(key, value, expiry);
         }
 
-        public async Task<bool> SetAsync(string key, string value, TimeSpan? expiry)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2007:Consider calling ConfigureAwait on the awaited task", Justification = "<Pending>")]
+        public async Task<bool> StringSetAsync(string key, string value, TimeSpan? expiry)
         {
             return await ConnectionMultiplexer.GetDatabase().StringSetAsync(key, value, expiry);
         }
@@ -57,6 +60,7 @@ namespace Infrastructure
             return ConnectionMultiplexer.GetDatabase().KeyExists(key);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2007:Consider calling ConfigureAwait on the awaited task", Justification = "<Pending>")]
         public async Task<bool> ExistsAsync(string key)
         {
             return await ConnectionMultiplexer.GetDatabase().KeyExistsAsync(key);

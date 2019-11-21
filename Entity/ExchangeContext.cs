@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Entity
 {
@@ -20,12 +22,11 @@ namespace Entity
         public virtual DbSet<TradeHistory> TradeHistory { get; set; }
         public virtual DbSet<TradeTransaction> TradeTransaction { get; set; }
         public virtual DbSet<Transaction> Transaction { get; set; }
+        public virtual DbSet<UserCredentials> UserCredentials { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
-
             modelBuilder.Entity<Balance>(entity =>
             {
                 entity.ToTable("balance");
@@ -750,9 +751,58 @@ namespace Entity
                     .HasConstraintName("transaction_user_id_fkey");
             });
 
+            modelBuilder.Entity<UserCredentials>(entity =>
+            {
+                entity.ToTable("user_credentials");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.CreatedOn)
+                    .HasColumnName("created_on")
+                    .HasColumnType("timestamp with time zone");
+
+                entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
+
+                entity.Property(e => e.LoginFailedAttempt).HasColumnName("login_failed_attempt");
+
+                entity.Property(e => e.LoginFailedStartOn)
+                    .HasColumnName("login_failed_start_on")
+                    .HasColumnType("timestamp with time zone");
+
+                entity.Property(e => e.LoginUnblockOn)
+                    .HasColumnName("login_unblock_on")
+                    .HasColumnType("timestamp with time zone");
+
+                entity.Property(e => e.ModifiedOn)
+                    .HasColumnName("modified_on")
+                    .HasColumnType("timestamp with time zone");
+
+                entity.Property(e => e.PasswordHash)
+                    .IsRequired()
+                    .HasColumnName("password_hash")
+                    .HasMaxLength(250);
+
+                entity.Property(e => e.Salt)
+                    .IsRequired()
+                    .HasColumnName("salt")
+                    .HasMaxLength(250);
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserCredentials)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("user_credentials_user_id_fkey");
+            });
+
             modelBuilder.Entity<Users>(entity =>
             {
                 entity.ToTable("users");
+
+                entity.HasIndex(e => e.UniqueId)
+                    .HasName("users_unique_id_key")
+                    .IsUnique();
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
@@ -789,13 +839,13 @@ namespace Entity
                 entity.Property(e => e.ModifiedOn)
                     .HasColumnName("modified_on")
                     .HasColumnType("timestamp with time zone");
+
+                entity.Property(e => e.UniqueId).HasColumnName("unique_id");
             });
 
-            modelBuilder.HasSequence<int>("kyc_id_seq");
-
-            modelBuilder.HasSequence<int>("order_id_seq");
-
-            modelBuilder.HasSequence<int>("user_id_seq");
+            OnModelCreatingPartial(modelBuilder);
         }
+
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

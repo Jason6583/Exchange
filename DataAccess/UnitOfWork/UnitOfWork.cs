@@ -4,13 +4,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.UnitOfWork
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "<Pending>")]
     public class UnitOfWork : IUnitOfWork
     {
 
-        private readonly DbContext _dbContext;
+        private readonly ExchangeContext _dbContext;
         private IOrdersRepository _ordersRepository;
         private ICurrencyRepository _currencyRepository;
-        public UnitOfWork(DbContext dbContext)
+        private IUserCredentialRepository _userCredentialRepository;
+        public UnitOfWork(ExchangeContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -37,6 +39,19 @@ namespace DataAccess.UnitOfWork
             }
         }
 
+        public IUserCredentialRepository UserCredentialRepository
+        {
+            get
+            {
+                if (_userCredentialRepository == null)
+                    _userCredentialRepository = new UserCredentialRepository(_dbContext.Set<UserCredentials>());
+
+                return _userCredentialRepository;
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "<Pending>")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA1816:Dispose methods should call SuppressFinalize", Justification = "<Pending>")]
         public void Dispose()
         {
             _dbContext.Dispose();

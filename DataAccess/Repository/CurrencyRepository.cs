@@ -13,7 +13,7 @@ namespace DataAccess.Repository
 
         public List<Currency> GetAllCurrencies()
         {
-            return _dbSet.ToList();
+            return DbSet.ToList();
         }
     }
 }

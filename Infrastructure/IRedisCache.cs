@@ -6,13 +6,13 @@ namespace Infrastructure
 {
     public interface IRedisCache
     {
-        RedisValue Get(string key);
+        RedisValue StringGet(string key);
 
-        Task<RedisValue> GetAsync(string key);
+        Task<RedisValue> StringGetAsync(string key);
 
-        bool Set(string key, string value, TimeSpan? expiry);
+        bool StringSet(string key, string value, TimeSpan? expiry);
 
-        Task<bool> SetAsync(string key, string value, TimeSpan? expiry);
+        Task<bool> StringSetAsync(string key, string value, TimeSpan? expiry);
 
         bool Exists(string key);
 

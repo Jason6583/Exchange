@@ -1,9 +1,6 @@
 ﻿using NSwag.Generation.Processors;
 using NSwag.Generation.Processors.Contexts;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace API
 {
@@ -11,6 +8,9 @@ namespace API
     {
         public bool Process(OperationProcessorContext context)
         {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
             context.OperationDescription.Operation.Parameters.Add(
             new NSwag.OpenApiParameter
             {
