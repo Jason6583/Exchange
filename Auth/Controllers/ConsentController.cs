@@ -63,7 +63,8 @@ namespace Auth.Controllers
                 var client = await _clientStore.FindClientByIdAsync(result.ClientId);
                 if (client != null && client.RequirePkce == true)
                 {
-                    throw new NotImplementedException(); //TODO need to impelement PKCE workflow
+                    ViewBag.RedirectUrl = result.RedirectUri;
+                    return View("Redirect");
                 }
 
                 return Redirect(result.RedirectUri);
@@ -179,10 +180,7 @@ namespace Auth.Controllers
             return null;
         }
 
-        private ConsentViewModel CreateConsentViewModel(
-            ConsentInputModel model, string returnUrl,
-            AuthorizationRequest request,
-            Client client, Resources resources)
+        private ConsentViewModel CreateConsentViewModel(ConsentInputModel model, string returnUrl, AuthorizationRequest request, Client client, Resources resources)
         {
             var vm = new ConsentViewModel
             {

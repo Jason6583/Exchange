@@ -1,9 +1,10 @@
 ﻿using API.Middleware;
+using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace API
 {
@@ -20,8 +21,15 @@ namespace API
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddControllers();
             services.AddBusinessServices();
+            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+                    .AddIdentityServerAuthentication(options =>
+                    {
+                        options.Authority = "https://localhost:44326/";
+                        options.ApiName = "Exchange";
+                    });
+
             services.AddSwaggerDocument(config =>
             {
                 config.Title = "Exchange API";
@@ -32,7 +40,7 @@ namespace API
 
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -44,8 +52,13 @@ namespace API
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseMiddleware<DuplicateRequestMiddleware>();
-            app.UseMvc();
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllers();
+                });
             app.UseOpenApi();
             app.UseSwaggerUi3();
         }

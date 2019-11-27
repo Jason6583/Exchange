@@ -1,5 +1,4 @@
 ﻿using Auth.Models;
-using IdentityServer4.Events;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Logic;
@@ -47,12 +46,8 @@ namespace Auth.Controllers
 
                     var claims = new List<Claim>()
                     {
-                        new Claim(ClaimTypes.Name, user.Email),
-                        new Claim("FullName", user.Email),
-                        new Claim(ClaimTypes.Role, user.Email),
-                        new Claim("subject", user.UniqueId.ToString().ToLower()),
                         new Claim("sub", user.UniqueId.ToString().ToLower()),
-                        new Claim("name", user.Email.ToString().ToLower())
+                        new Claim("name", user.UniqueId.ToString().ToLower())
                     };
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var authProperties = new AuthenticationProperties
@@ -68,7 +63,8 @@ namespace Auth.Controllers
                         var client = await _clientStore.FindClientByIdAsync(context.ClientId);
                         if (client != null && client.RequirePkce)
                         {
-                            throw new NotImplementedException();
+                            ViewBag.RedirectUrl = login.ReturnUrl;
+                            return View("Redirect");
                         }
                         else
                         {
